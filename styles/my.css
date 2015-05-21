@@ -1,0 +1,199 @@
+/*
+   My CSS
+*/
+input.dashboard-title{
+    width:120px;
+    margin-top:-5px;
+}
+.selectedli{
+    background-color:#6A55C2;
+}
+.selecteddashtext{
+    color:#FFF;
+}
+.dscomparenav button{
+    margin-left: 15px;
+}
+.widgetError{
+    position:absolute;
+    left:0px;
+    right:0px;
+	top:50%;
+    margin:auto;
+    width:60%;
+    text-align:center;
+}
+.LoadingIcon{
+    position:absolute;left:50%;top:50%;
+}
+.kpi_widget{
+    text-align:center;
+}
+.kpi_arrow{
+    width:20px;
+}
+.kpivalue{
+    font-size:24px;
+}
+.kpigreen{
+    color:#50F078;
+}
+.kpired{
+    color:#F00000;
+}
+.green{
+    background-color:#7CDB7E !important;
+}
+.red{
+    background-color:#FE917D !important;
+}
+.yellow{
+    background-color:#F9C475 !important;
+}
+.white{
+    color:#FFF;
+}
+.HomePage{
+    padding-top:50px;
+}
+.dashboard-toolbar{
+    left:240px;top:10px;
+    position:fixed;
+    z-index:9999;
+    display:inline-block !important;
+}
+.lightbrown{
+    background-color:#976CAD;
+}
+.darkbrown{
+    background-color:#58267F;
+    color:#FFF;
+}
+.darkbrown_text{
+    color:#58267F;
+}
+.trianglebar:before{
+    text-align: left !important;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 60px 0px 0px 35px;
+    border-color: #58267F #58267F transparent transparent;
+    position: absolute;
+    top: 0px;
+    left: -35px;
+}
+.trianglebar{
+    background-color:#58267F;
+    position:relative;
+    color:#FFFFFF;line-height:60px;font-size:25px;
+}
+.SuperGrader{
+    padding-top : 50px;
+}
+.segments_table{
+    color:#FFF;
+    font-size:18px;
+    width:100%;
+    margin-top:20px;
+}
+.segments_table td{
+    padding:10px;
+    text-align:center;
+}
+.segments_table tr:nth-child(odd){
+    background-color:#58267F;
+}
+.segments_table tr:nth-child(even){
+    background-color:#976CAD;
+}
+.grade_stats{
+    padding-top : 30px;
+}
+.grade_stats h3{
+    color:#58267F;
+    font-weight:bold;
+}
+.skew_rectangle {
+    color: white;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 4px;
+    background: #58267F;
+    position: relative;
+    margin-left:30px;
+    width:300px;
+    text-align:center;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.skew_rectangle:after {
+    content: '';
+    position: absolute;
+    height: 0px;
+    width: 40px;
+    top: 0;
+}
+.skew_rectangle:before{
+    content: '';
+    position: absolute;
+    height: 0px;
+    width: 40px;
+    top: 0;
+}
+.skew_rectangle:after {
+    right: -20px;
+    border-top: 40px solid #58267F;
+    border-right: 20px solid transparent;
+    z-index: -10;
+}
+.skew_rectangle:before {
+    left: -20px;
+    border-top: 40px solid #58267F;
+    border-left: 20px solid transparent;
+    z-index: -10;
+}
+
+
+.reverse_skew_rectangle {
+    color: white;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 4px;
+    background: #58267F;
+    position: relative;
+    margin-left:30px;
+    width:50px;
+    text-align:center;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.reverse_skew_rectangle:after {
+    content: '';
+    position: absolute;
+    height: 0px;
+    width: 40px;
+    top: 0;
+}
+.reverse_skew_rectangle:before{
+    content: '';
+    position: absolute;
+    height: 0px;
+    width: 40px;
+    top: 0;
+}
+.reverse_skew_rectangle:after {
+    right: -20px;
+    border-bottom: 40px solid #58267F;
+    border-right: 20px solid transparent;
+    z-index: -10;
+}
+.reverse_skew_rectangle:before {
+    left: -20px;
+    border-bottom: 40px solid #58267F;
+    border-left: 20px solid transparent;
+    z-index: -10;
+}

@@ -1,0 +1,32 @@
+<div class="super-score">
+    <!--<div ng-grid="gridOptions" class="grid"></div>-->
+    <table class="table table-bordered table-striped cf" style="padding-bottom:0px;margin-bottom:0px;">
+        <thead class="cf">
+        <tr>
+            <th>Profile</th>
+            <th>Segment</th>
+            <th ng-repeat="column in labels">
+                {{column}}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in items">
+                <td>{{maindata.profile}}</td>
+                <td>{{maindata.segment}}</td>
+                <td ng-repeat="column in row" ng-class="cellstyles[$parent.$index][$index]">
+                    {{column}}
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-repeat="compdata in compdatas" class="table table-bordered table-striped cf" style="padding-bottom:0px;margin-bottom:0px;margin-top:0px;">
+            <tr ng-repeat="row in compdata.rows">
+                <td>{{compdata.profile}}</td>
+                <td>{{compdata.segment}}</td>
+                <td ng-repeat="column in row" ng-class="compdata.cellstyles[$parent.$index][$index]">
+                    {{column}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

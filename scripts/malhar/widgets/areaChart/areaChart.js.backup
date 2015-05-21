@@ -1,0 +1,122 @@
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict';
+
+angular.module('ui.widgets')
+    .directive('wtAreaChart', function () {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'template/widgets/areaChart/areaChart.html',
+            scope: {
+                data: '='
+            },
+            controller: function ($scope) {
+                $scope.mainData = [
+                    {
+                        'month': '2014-10-10',
+                        'xbox': 294000,
+                        'will': 136000,
+                        'playstation': 244000
+                    }, {
+                        month: '2014-10-11',
+                        xbox: 228000,
+                        will: 335000,
+                        playstation: 127000
+                    }, {
+                        month: '2014-10-12',
+                        xbox: 199000,
+                        will: 159000,
+                        playstation: 130000
+                    }, {
+                        month: '2014-10-13',
+                        xbox: 174000,
+                        will: 160000,
+                        playstation: 82000
+                    }, {
+                        month: '2014-10-14',
+                        xbox: 255000,
+                        will: 318000,
+                        playstation: 82000
+                    }, {
+                        month: '2014-10-15',
+                        xbox: 298400,
+                        will: 401800,
+                        playstation: 98600
+                    }, {
+                        month: '2014-10-16',
+                        xbox: 370000,
+                        will: 225000,
+                        playstation: 159000
+                    }, {
+                        month: '2014-10-17',
+                        xbox: 376700,
+                        will: 303600,
+                        playstation: 130000
+                    }, {
+                        month: '2014-10-18',
+                        xbox: 527800,
+                        will: 301000,
+                        playstation: 119400
+                    }
+                ];
+                $scope.metrics = ["xbox", "will", "playstation"];
+                $scope.linecolors = ["#6A55C2","#E94B3B","#2EC1CC"];
+                $scope.xkey = "month";
+            },
+            link: function postLink(scope) {
+                scope.$watch('data', function (data) {
+                    if (data) {
+                        var columns = data['columnHeaders'];
+                        var metrics = [];
+                        for(var i in columns){
+                            var column = columns[i];
+                            if(column['columnType'] == 'METRIC')
+                                metrics.push(column['name']);
+                        }
+                        var rows = data['rows'];
+                        console.log(rows);
+                        var items = [];
+                        for(var index in rows){
+                            var row = rows[index];
+                            var item = {};
+                            for(var subindex in row){
+                                if(subindex == 0){
+                                    if(columns[0]['name'] == "ga:date"){
+                                        item['ga:date'] =   moment(row[subindex], "YYYYMMDD").format("YYYY-MM-DD");
+                                    }
+                                    if(columns[0]['name'] == "ga:yearweek"){
+                                        item['ga:yearweek'] =   moment(row[subindex], "YYYYWW").format("YYYY-MM-DD");
+                                    }
+                                    if(columns[0]['name'] == "ga:yearmonth"){
+                                        item['ga:yearmonth'] =   moment(row[subindex], "YYYYMM").format("YYYY-MM-DD");
+                                    }
+                                    continue;
+                                }
+                                item[columns[subindex]['name']] = row[subindex];
+                            }
+                            items.push(item);
+                        }
+                        var graphdata = {items : items, xkey : columns[0]['name'], ykeys : metrics, labels : metrics};
+
+                        console.log(graphdata);
+                        scope.$$childHead.setData(graphdata, 'area');
+                    }
+                });
+            }
+        };
+    });

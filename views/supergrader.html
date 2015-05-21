@@ -1,0 +1,110 @@
+<div class="page page-dashboard" data-ng-controller = "SuperGraderCtrl" class="SuperGrader">
+    <div class="trianglebar" style="width:70%;float:right;padding-left:50px;">
+        Grade your Customer Experience Maturity
+    </div>
+    <div ng-show="loading_progress!=100">
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                <img src="images/grader-_.png" style="width:500px;"/>
+            </div>
+            <div class="col-sm-6 text-center">
+                <h2 class="darkbrown_text" style="text-transform: uppercase;font-weight:bold;">
+                    What's Your Grade?
+                </h2>
+                <div class="form-group" style="padding-top:50px;">
+                    <div><label for="GAAccount" class="col-sm-3 control-label">Account</label></div>
+                    <div>
+                        <select class="form-control" name="accounts" data-ng-model="result.ga.accountid">
+                            <option data-ng-repeat="account in result.ga.accounts" value="{{account.id}}"
+                                    data-ng-selected="account.id == result.ga.accountid">{{account.name}}
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group" style="padding-top:15px;">
+                    <div><label for="GAProperty" class="col-sm-3 control-label">Property</label></div>
+
+                    <div>
+                        <select class="form-control" name="properties" data-ng-model="result.ga.propertyid">
+                            <option data-ng-repeat="property in result.ga.properties | filter:{accountId : result.ga.accountid}" value="{{property.id}}"
+                                    data-ng-selected="property.id == result.ga.propertyid">{{property.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="padding-top:15px;">
+                    <div><label for="GAProfile" class="col-sm-3 control-label">Profile</label></div>
+                    <div >
+                        <select class="form-control" name="profiles" data-ng-model="result.ga.profileid">
+                            <option data-ng-repeat="profile in result.ga.profiles | filter:{accountId: result.ga.accountid, webPropertyId:result.ga.propertyid}" value="{{profile.id}}"
+                                    data-ng-selected="profile.id == result.ga.profileid">{{profile.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <a href="javascript:none;" ng-click="startGrade()" > <img src="images/grade-me-now-button.png" width="250px" style="padding-top:20px"></a>
+            </div>
+        </div>
+        <progressbar value="loading_progress" type="success"><b>{{loading_progress}}%</b></progressbar>
+    </div>
+    <div ng-show="loading_progress==100">
+        <div class="row grade_stats">
+            <div class="col-md-4 text-center" style="padding-top:80px">
+                <div easypiechart options="easypiechart_allsessions.options" percent="easypiechart_allsessions.percent" class="easypiechart">
+                    <span class="pie-percent" ng-bind="easypiechart_allsessions.percent"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>Best Customer Segments</h3>
+                <table class="segments_table">
+                   <tbody>
+                        <tr ng-repeat="top in topfive">
+                            <td>{{top}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h3>Improve these segments</h3>
+                <table class="segments_table">
+                    <tbody>
+                        <tr ng-repeat="bottom in bottomfive">
+                            <td>{{bottom}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" style="padding-top:50px">
+            <h2 class="darkbrown_text" style="text-transform: uppercase;font-weight:bold;padding-left:50px;padding-bottom:30px;">
+                What Could You Do Next?
+            </h2>
+
+                <div class="col-lg-4 col-md-6 text-center">
+                    <a href="javascript:none;" ng-click="startDashing()"> <span class="skew_rectangle" style="font-size:20px;">START DASHING</span></a>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <span class="reverse_skew_rectangle">
+                        <img src="images/share_button.png" height="30px">
+                    </span>
+                    <span class="skew_rectangle" ng-click="openShareDialog()" style="cursor:pointer;font-size:20px;width:250px;">SHARE YOUR GRADE</span>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <a href="mailto:sales@superanalytics.fi?subject=New SuperGrade Request" ><span class="skew_rectangle"  style="cursor:pointer;font-size:20px;">REQUEST FOR INFORMATION</span></a>
+                </div>
+
+            <script type="text/ng-template" id="SocialShareDialog.html">
+                <div class="modal-header">
+                    <h3>Share with Social Network.</h3>
+                </div>
+                <div class="modal-body">
+                    <div fb-like></div>
+                    <div twitter  data-lang="en" data-count='horizontal' data-url='http://superbrain.io/?utm_source=twitter&utm_medium=share&utm_campaign=grade' data-via='super_analytics' data-size="medium" data-text='{{sharingtext}}' ></div>
+                    <div linkedin class="linkedinShare" data-url='http://superbrain.io/?utm_source=linkedin&utm_medium=share&utm_campaign=grade' data-title='Super Grader - Grade your Customer Experience(Google Analytics required)' data-summary="{{sharingtext}}" data-shares='linkedinshares'>{{shares}}</div><br/>
+                    <div gplus class="g-plus" data-size="tall" data-annotation="bubble" data-href='http://superbrain.io/?utm_source=gplus&utm_medium=share&utm_campaign=grade' data-action='share'></div>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

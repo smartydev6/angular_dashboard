@@ -1,0 +1,63 @@
+<div>
+    <div class="btn-toolbar dashboard-toolbar" ng-if="!options.hideToolbar">
+        <div class="btn-group" ng-if="!options.widgetButtons">
+            <span class="dropdown" on-toggle="toggled(open)">
+              <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+                Button dropdown <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="widget in widgetDefs">
+                  <a href="#" ng-click="addWidgetInternal($event, widget);" class="dropdown-toggle">{{widget.name}}</a>
+                </li>
+              </ul>
+            </span>
+        </div>
+        <div class="btn-group pull-left" ng-if="options.widgetButtons">
+            <button ng-repeat="widget in widgetDefs"
+                    ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
+                {{widget.btntitle}}
+            </button>
+        </div>
+        <div class="pull-left" style="padding-left:10px">
+            <button ng-if="options.storage && options.explicitSave" ng-click="options.saveDashboard()" class="btn btn-success" ng-disabled="!options.unsavedChangeCount">{{ !options.unsavedChangeCount ? "all saved" : "save changes (" + options.unsavedChangeCount + ")" }}</button>
+            <button ng-click="saveLayout(dashboardid);" type="button" class="btn btn-info">Save</button>
+            <button ng-click="share(dashboardid);" type="button" class="btn btn-success">Share</button>
+            <button ng-click="remove(dashboardid);" type="button" class="btn btn-danger">Remove</button>
+            <button ng-click="export();" type="button" class="btn btn-danger">Export</button>
+        </div>
+    </div>
+    <div ui-sortable="sortableOptions" ng-model="widgets" class="dashboard-widget-area">
+        <div ng-repeat="widget in widgets" id="widget{{widget.id}}" ng-style="widget.containerStyle" class="widget-container" widget>
+            <div class="widget panel panel-default" style="position:relative;">
+                <div class="widget-header panel-heading">
+                    <h3 class="panel-title">
+                        <span class="widget-title" ng-dblclick="editTitle(widget)" ng-hide="widget.editingTitle">{{widget.title}}</span>
+                        <form action="" class="widget-title" ng-show="widget.editingTitle" ng-submit="saveTitleEdit(widget)">
+                            <input type="text" ng-model="widget.title" class="form-control">
+                        </form>
+                        <span class="label label-primary" ng-if="!options.hideWidgetName">{{widget.name}}</span>
+                        <span ng-if="widget.widgetSettings.ga.dtStart">{{getWidgetDateRange(widget)}}</span>
+                        <span ng-click="removeWidget(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose" title="Close"></span>
+                        <span ng-click="openWidgetSettings(widget,this);" class="glyphicon glyphicon-cog" ng-if="!widget.attrs.hideWidgetSettings" title="Settings"></span>
+                        <span ng-click="openWidgetSettingsComps(widget,this);" class="glyphicon glyphicon-plus" ng-if="!widget.attrs.hideWidgetComparisons" title="Add Comparisons"></span>
+                        <span ng-click="openWidgetDisplayPrefers(widget,this);" class="glyphicon glyphicon-minus" ng-if="widget.attrs.showWidgetDisplayPrefers" title="Preferences"></span>
+                        <span ng-click="loadWidgetData(widget,this);" class="glyphicon glyphicon-refresh" ng-if="!widget.attrs.hideWidgetLoad" title="Reload"></span>
+                        <span ng-click="exportWidget(widget);" class="glyphicon glyphicon-export" ng-if="!widget.attrs.hideWidgetExport" title="Export"></span>
+                        <span ng-click="saveWidget(widget, this);" class="glyphicon glyphicon-save" ng-if="widget.attrs.showWidgetSave && !widget.attrs.isSaved" title="Save"></span>
+                        <span ng-click="editWidget(widget, this);" class="glyphicon glyphicon-edit" ng-if="widget.attrs.showWidgetSave && widget.attrs.isSaved" title="Edit"></span>
+                    </h3>
+                </div>
+                <div class="panel-body widget-content" ng-style="widget.contentStyle">
+                </div>
+                <span class="LoadingIcon" ng-show="widget.isLoadingData"><i class="fa fa-circle-o-notch fa-spin" style="font-size:40px;"></i></span>
+                <span class="widgetError alert alert-danger" ng-show="widget.isError">User does not have sufficient permission for this profile.</span>
+                <div class="widget-ew-resizer" ng-mousedown="grabResizer($event)"></div>
+                <div ng-if="widget.enableVerticalResize" class="widget-s-resizer" ng-mousedown="grabSouthResizer($event)"></div>
+            </div>
+        </div>
+        <div ng-if="widgets.length==0">
+            <h3> The Dashboard is empty. Please add a widget.</h3>
+        </div>
+    </div>
+    <iframe name="iframeForReport" style="display:none"></iframe>
+</div>

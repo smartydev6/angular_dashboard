@@ -1,0 +1,67 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: url(http://themes.googleusercontent.com/static/fonts/opensans/v6/EInbV5DfGHOiMmvb1Xr-hhsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}
+@font-face{
+    font-family : 'Din-Light';
+    font-style: normal;
+    src:url("../fonts/din-light.ttf");
+}
+html,p,span,input,div{
+	font-family:'Din-Light';
+    /*font-family : 'Times New Roman';*/
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+.morris-hover {
+  z-index: 1;
+  position: absolute;
+}
+.widget-container{
+	width:830px !important;
+}
+.morris-hover.morris-default-style {
+  border-radius: 2px;
+  padding: 6px;
+  color: #666;
+  background: rgba(255, 255, 255, 0.8);
+  border: solid 2px rgba(230, 230, 230, 0.8);
+  font-size: 12px;
+  text-align: center;
+}
+.morris-hover.morris-default-style .morris-hover-row-label {
+  font-weight: bold;
+  margin: 0.25em 0;
+}
+.morris-hover.morris-default-style .morris-hover-point {
+  white-space: nowrap;
+  margin: 0.1em 0;
+}
+.widget-container {
+    float:none!important;
+	display:block!important;
+}
+.panel-title{
+	padding-left:20px !important;
+}
+table,td,th{
+	border:1px solid #ddd !important;	
+	border-spacing:0px !important;
+	border-collapse:collapse;
+}
+th{
+	border-bottom-width:2px;
+}
+.widget-content{
+	padding:15px !important;
+}
+td, th{
+	padding:10px !important;
+}
+tbody > tr:nth-child(odd) > td{
+	background-color:#f9f9f9;
+}
+

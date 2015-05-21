@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+    <h3>Widget Preferences <small>{{widget.title}}</small></h3>
+</div>
+
+<div class="modal-body">
+    <form name="form" novalidate class="form-horizontal form-validation">
+        <div ng-repeat="metric in result.metArray" class="form-group">
+            <div class="col-sm-4"><b>{{metric.label}}</b></div>
+            <div class="col-sm-4">When value increases it is...</div>
+            <div class="col-sm-4">
+                <div class="btn-group">
+                    <label class="btn btn-success" ng-model="metric.indicatorArrow"
+                           btn-radio="'Good'">Good</label>
+                    <label class="btn btn-warning" ng-model="metric.indicatorArrow"
+                           btn-radio="'Bad'">Bad</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

@@ -1,0 +1,30 @@
+<div id="nav-wrapper" ng-if="!isAdmin">
+    <ul id="nav"
+        data-ng-controller="NavCtrl"
+        data-collapse-nav
+        data-slim-scroll
+        data-highlight-active>
+        <li><a href="#/supergrader"> <i class="fa fa-share-alt"><span class="icon-bg bg-violet"></span></i><span data-i18n="SUPER GRADER"></span> </a></li>
+        <li><a href="#/home" ng-click="changedashboard(0)"> <i class="fa fa-home"><span class="icon-bg bg-violet"></span></i><span data-i18n="START PAGE"></span> </a></li>
+        <li ng-repeat = "dashboard in dashboards" ng-class="{selectedli:dashboard.id==currentDashboardId}" class="dashboard" >
+            <a href="#/dashboard/{{dashboard.id}}" ng-click="changedashboard(dashboard.id)">
+                <i class="fa fa-dashboard"><span class="icon-bg bg-violet"></span></i>
+                <span class="dashboard-title" ng-dblclick="editTitle(dashboard, this)" ng-hide="dashboard.editingTitle" ng-class="{selecteddashtext:dashboard.id==currentDashboardId}">{{dashboard.title}}</span>
+                {{$rootScope.currentDashboardId}}
+                <form action="" class="dashboard-title" ng-show="dashboard.editingTitle" ng-submit="saveTitleEdit(dashboard)">
+                    <input type="text" class="dashboard-title form-control"  autofocus="1" ng-model="dashboard.title">
+                </form>
+            </a>
+        </li>
+        <li><a href="javascript:void(0);" ng-click="addDashboard()" style="cursor:pointer"><i class="fa fa-plus-circle"><span class="icon-bg bg-orange"></span></i><span data-i18n="Add New"></span> </a></li>
+    </ul>
+</div>
+
+<div id="nav-wrapper" ng-if="isAdmin">
+    <ul id="nav"
+        data-collapse-nav
+        data-slim-scroll
+        data-highlight-active>
+        <li><a href="javascript:none;" ng-click="changedashboard(0)"> <i class="fa fa-dashboard"><span class="icon-bg bg-violet"></span></i><span data-i18n="Users"></span> </a></li>
+    </ul>
+</div>

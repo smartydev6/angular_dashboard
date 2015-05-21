@@ -1,0 +1,8 @@
+<div class="kpi_widget">
+    <h2 class="">{{kpi.label}}</h2>
+    <span class="kpivalue">{{kpi.showvalue}}</span>&nbsp;&nbsp;
+    <span ng-if="kpi.changevalue!=-1">
+        <span><img ng-src="{{kpi.arrowimage}}" class="kpi_arrow" ></span>
+        <span ng-class="kpi.changeclass">{{kpi.changevalue}}%</span>
+    </span>
+</div>

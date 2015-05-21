@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h3>Share your dashboard with</h3>
+</div>
+
+<div class="modal-body">
+    <form name="form" class="form-horizontal form-validation">
+        <label class=""> You can share this dashboard up to 5 colleagues.</label>
+        <div data-ng-repeat="recipient in recipients" class="form-group">
+            <label class="col-sm-3 control-label">Email : </label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control" name="email" placeholder="Type email address" required data-ng-model="recipient.address">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-9">
+                <a type="button" class="btn btn-default col-sm-offset-3 " ng-click="addnew();" >+ Add another email.</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">Share now</button>
+</div>

@@ -1,0 +1,29 @@
+{
+  "name": "malhar-angular-dashboard",
+  "main": "./dist/angular-ui-dashboard.js",
+  "license": "Apache License, v2.0",
+  "dependencies": {
+    "jquery": "~2.0.3",
+    "angular": "~1.2.22",
+    "angular-bootstrap": "~0.11.0",
+    "angular-ui-sortable": "~0.12.8",
+    "jquery-ui": "~1.11.0",
+    "lodash": "~2.4.1"
+  },
+  "devDependencies": {
+    "angular-route": "~1.2.22",
+    "angular-mocks": "~1.2.22",
+    "angular-markdown-directive": "~0.3.0",
+    "bootstrap": "~3.2.0"
+  },
+  "homepage": "https://github.com/DataTorrent/malhar-angular-dashboard",
+  "_release": "fc5ba03c5e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "fc5ba03c5ea2d432360ec9b350b688ff239f7ccf"
+  },
+  "_source": "https://github.com/DataTorrent/malhar-angular-dashboard.git",
+  "_target": "master",
+  "_originalSource": "https://github.com/DataTorrent/malhar-angular-dashboard.git"
+}

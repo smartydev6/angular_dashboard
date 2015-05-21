@@ -1,0 +1,299 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+    <h3>Widget Options
+        <small>{{widget.title}}</small>
+    </h3>
+</div>
+
+<div class="modal-body">
+<form name="form" novalidate class="form-horizontal">
+<div class="form-group">
+    <label for="widgetTitle" class="col-sm-3 control-label">Title</label>
+
+    <div class="col-sm-9">
+        <input type="text" class="form-control" name="widgetTitle" ng-model="result.title">
+    </div>
+</div>
+<div class="form-group">
+    <label for="widgetSource" class="col-sm-3 control-label">Data Source</label>
+
+    <div class="col-sm-9">
+        <select class="form-control" name="datasources" data-ng-model="result.datasource"
+                data-ng-change="changeDataSource()">
+            <option data-ng-repeat="datasource in datasources" value="{{datasource.id}}"
+                    data-ng-selected="datasource.id == result.datasource">{{datasource.value}}
+            </option>
+        </select>
+    </div>
+</div>
+<!-- Data Source Settings -->
+<div class="form-group">
+    <div class="col-sm-9 col-sm-offset-3">
+        <div class="form-group">
+            <label for="GAAccount" class="col-sm-3 control-label">Account</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="accounts" data-ng-model="result.ga.accountid">
+                    <option data-ng-repeat="account in result.ga.accounts" value="{{account.id}}"
+                            data-ng-selected="account.id == result.ga.accountid">{{account.name}}
+                    </option>
+                </select>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="GAProperty" class="col-sm-3 control-label">Property</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" name="properties" data-ng-model="result.ga.propertyid">
+                    <option data-ng-repeat="property in result.ga.properties | filter:{accountId : result.ga.accountid}" value="{{property.id}}"
+                            data-ng-selected="property.id == result.ga.propertyid">{{property.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="GAProfile" class="col-sm-3 control-label">Profile</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" name="profiles" data-ng-model="result.ga.profileid">
+                    <option data-ng-repeat="profile in result.ga.profiles | filter:{accountId: result.ga.accountid, webPropertyId:result.ga.propertyid}" value="{{profile.id}}"
+                            data-ng-selected="profile.id == result.ga.profileid">{{profile.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="GASegment" class="col-sm-3 control-label">Segments</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" name="segments" data-ng-model="result.ga.segmentid">
+                    <option data-ng-repeat="segment in result.ga.segments" value="{{segment.id}}"
+                            data-ng-selected="segment.id == result.ga.segmentid">{{segment.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-hide="result.ga.showTimeline" ng-if="!result.attrs.hideDimension">
+            <label for="GADimension" class="col-sm-3 control-label">Dimensions</label>
+
+            <div class="col-sm-9">
+                <!-- <select name="dimensions" data-ng-model="result.ga.dimensionid">
+                </select> --->
+                <ui-select multiple ng-model="result.ga.dimModel" theme="select2" ng-disabled="disabled" style="width: 100%">
+                    <ui-select-match placeholder="Select dimension...">{{$item.label}}</ui-select-match>
+                    <ui-select-choices group-by="result.ga.getGroupField" repeat="dim.id as dim in result.ga.dimData | filter:$select.search">
+                        {{dim.label}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="GAMetric" class="col-sm-3 control-label">Metrics</label>
+
+            <div class="col-sm-9">
+                <ui-select multiple ng-model="result.ga.metModel" theme="select2" ng-disabled="disabled" style="width: 100%">
+                    <ui-select-match placeholder="Select metric...">{{$item.label}}</ui-select-match>
+                    <ui-select-choices group-by="result.ga.getGroupField" repeat="met.id as met in result.ga.metData | filter:$select.search">
+                        {{met.label}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label for="GAStartDate" class="col-sm-3 control-label">Start Date</label>
+
+            <div class="col-sm-9">
+                <input type="text"
+                       class="form-control"
+                       datepicker-popup="{{format}}"
+                       ng-model="result.ga.dtStart"
+                       is-open="opened1"
+                       min="minDate"
+                       max="'2015-06-22'"
+                       datepicker-options="dateOptions"
+                       date-disabled="disabled(date, mode)"
+                       ng-required="true"
+                       close-text="Close">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="GAEndDate" class="col-sm-3 control-label">End Date</label>
+
+            <div class="col-sm-9">
+                <input type="text"
+                       class="form-control"
+                       datepicker-popup="{{format}}"
+                       ng-model="result.ga.dtEnd"
+                       is-open="opened2"
+                       min="minDate"
+                       max="'2015-06-22'"
+                       datepicker-options="dateOptions"
+                       date-disabled="disabled(date, mode)"
+                       ng-required="true"
+                       close-text="Close">
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Date Range</label>
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <select class="form-control" ng-change="result.change_daterange()" ng-model="result.ga.daterangeType">
+                            <option disabled selected style='display:none;'>Choose...</option>
+                            <option ng-repeat="dtrange in result.ga.daterangearray" value="{{dtrange.value}}" ng-selected="result.ga.daterangeType == dtrange.value">{{dtrange.label}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input date-range-picker class="form-control date-picker" type="text"
+                               name="date" min="" max="" ng-model="result.ga.daterange" options="daterangeopts" ng-show="result.ga.daterangeType=='custom'" required/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-show="result.ga.showTimeline">
+            <label for="GAPeriod" class="col-sm-3 control-label">Period</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" name="periods" data-ng-model="result.ga.period">
+                    <option data-ng-repeat="period in result.ga.periods" value="{{period}}"
+                            data-ng-selected="period == result.ga.period">{{period}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="result.ga.showIndicator">
+            <label for="GAIndicator" class="col-sm-3 control-label">When value increases it is...</label>
+
+            <div class="col-sm-9">
+                <div class="btn-group">
+                    <label class="btn btn-success" ng-model="result.ga.indicatorArrow"
+                           btn-radio="'Good'">Good</label>
+                    <label class="btn btn-warning" ng-model="result.ga.indicatorArrow"
+                           btn-radio="'Bad'">Bad</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="GAInherit" class="col-sm-3 control-label"></label>
+
+            <div class="col-sm-9">
+                <a href="javascript:none" ng-click="result.isInherit=1"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Inherit
+                    data from another account</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="result.isInherit">
+    <div class="form-group">
+        <div class="col-sm-9 col-sm-offset-3">
+            <span>Choose the account you want to inherit data from:</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="widgetSource" class="col-sm-3 control-label">Data Source</label>
+
+        <div class="col-sm-9">
+            <select class="form-control" name="datasources" data-ng-model="result.inheritData.datasource"
+                    data-ng-change="inheritData.changeDataSource()">
+                <option data-ng-repeat="datasource in datasources" value="{{datasource.id}}"
+                        data-ng-selected="datasource.id == result.datasource">{{datasource.value}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <!-- Data Source Settings -->
+    <div class="form-group">
+        <div class="col-sm-9 col-sm-offset-3">
+            <div class="form-group">
+                <label for="GAAccount" class="col-sm-3 control-label">Account</label>
+
+                <div class="col-sm-9">
+                    <select class="form-control" name="accounts" data-ng-model="result.inheritData.ga.accountid"
+                            data-ng-change="inheritData.ga.changeAccount()">
+                        <option data-ng-repeat="account in result.inheritData.ga.accounts" value="{{account.id}}"
+                                data-ng-selected="account.id == result.inheritData.ga.accountid">{{account.name}}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="GAProperty" class="col-sm-3 control-label">Property</label>
+
+                <div class="col-sm-9">
+                    <select class="form-control" name="properties" data-ng-model="result.inheritData.ga.propertyid"
+                            data-ng-change="inheritData.ga.changeProperty()">
+                        <option data-ng-repeat="property in result.inheritData.ga.properties | filter:{accountId : result.inheritData.ga.accountid}" value="{{property.id}}"
+                                data-ng-selected="property.id == result.inheritData.ga.propertyid">{{property.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="GAProfile" class="col-sm-3 control-label">Profile</label>
+
+                <div class="col-sm-9">
+                    <select class="form-control" name="profiles" data-ng-model="result.inheritData.ga.profileid"
+                            data-ng-change="inheritData.ga.changeProfile()">
+                        <option data-ng-repeat="profile in result.inheritData.ga.profiles | filter:{accountId: result.inheritData.ga.accountid, webPropertyId:result.inheritData.ga.propertyid}" value="{{profile.id}}"
+                                data-ng-selected="profile.id == result.inheritData.ga.profileid">{{profile.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label for="GAStartDate" class="col-sm-3 control-label">Start Date</label>
+
+                <div class="col-sm-9">
+                    <input type="text"
+                           class="form-control"
+                           datepicker-popup="{{format}}"
+                           ng-model="result.inheritData.ga.dtStart"
+                           is-open="opened1"
+                           min="minDate"
+                           max="'2015-06-22'"
+                           datepicker-options="dateOptions"
+                           date-disabled="disabled(date, mode)"
+                           ng-required="true"
+                           close-text="Close">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="GAEndDate" class="col-sm-3 control-label">End Date</label>
+
+                <div class="col-sm-9">
+                    <input type="text"
+                           class="form-control"
+                           datepicker-popup="{{format}}"
+                           ng-model="result.inheritData.ga.dtEnd"
+                           is-open="opened2"
+                           min="minDate"
+                           max="'2015-06-22'"
+                           datepicker-options="dateOptions"
+                           date-disabled="disabled(date, mode)"
+                           ng-required="true"
+                           close-text="Close"> {{dt2 | date:'yyyy-MM-dd'}}
+                </div>
+            </div>-->
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Date Range</label>
+                <div class="col-sm-9">
+                    <input date-range-picker id="daterange3" class="form-control date-picker" type="text"
+                           name="date" min="" max="" ng-model="result.inheritData.ga.daterange" options="daterangeopts" required/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="widget.settingsModalOptions.partialTemplateUrl"
+     ng-include="widget.settingsModalOptions.partialTemplateUrl"></div>
+</form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

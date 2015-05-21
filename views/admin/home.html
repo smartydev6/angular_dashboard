@@ -1,0 +1,24 @@
+<div class="page page-table">
+
+<div class="panel panel-default">
+    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> User List</strong></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Email Address</th>
+            <th>Name (Optional)</th>
+            <th>Login Time</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="log in logs">
+                <td>1</td>
+                <td>{{log.email}}</td>
+                <td>{{log.name}}</td>
+                <td>{{log.logtime}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

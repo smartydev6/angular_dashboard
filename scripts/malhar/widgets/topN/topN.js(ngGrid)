@@ -1,0 +1,105 @@
+/*
+ * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+'use strict';
+
+angular.module('ui.widgets')
+    .directive('wtTopN', function () {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'template/widgets/topN/topN.html',
+            scope: {
+                data: '='
+            },
+            controller: function ($scope) {
+                $scope.columns = [
+                    { field: 'name', displayName: 'Name' },
+                    { field: 'value', displayName: 'Value' }
+                ];
+                $scope.gridOptions = {
+                    data: 'items',
+                    enableRowSelection: false,
+                    enableColumnResize: false,
+                    columnDefs: 'columns',
+                    enableVerticalScrollbar : false
+                };
+                $scope.items = [];
+                $scope.running = 0;
+            },
+            link: function postLink(scope) {
+                scope.$watch('data', function (data) {
+                    console.log(data);
+                    if (data) {
+                        console.log(data);
+                        var maindata = data['datas'];
+                        var items = maindata['rows'];
+                        var rows = [];
+                        var index, subindex;
+                        for(index in items){
+                            var item = items[index];
+                            var row = {};
+                            for(subindex in item){
+                                row["column" + subindex] = item[subindex];
+                            }
+                            row["profile"] = maindata["profile"];
+                            row["segment"] = maindata["segment"];
+                            rows.push(row);
+                        }
+                        var columns = maindata['columns'];
+                        var labels = maindata['labels'];
+                        var cols = [];
+                        for(index in columns){
+                            var column = {field : 'column' + index, displayName : labels[index]};
+                            cols.push(column);
+                        }
+
+                        //  In case of adding new data source
+                        if(data.compdatas){
+                            for(var i in data.compdatas){
+                                var c_rows = data.compdatas[i].rows;
+                                var temprows = [];
+                                for(index in c_rows){
+                                    var item = c_rows[index];
+                                    var row = {};
+                                    for(subindex in item){
+                                        row["column" + subindex] = item[subindex];
+                                    }
+                                    row["profile"] = data.compdatas[i]["profile"];
+                                    row["segment"] = data.compdatas[i]["segment"];
+                                    temprows.push(row);
+                                }
+                                rows = rows.concat(temprows);
+                            }
+                            var cols_pre = [
+                                {
+                                    field: 'profile', displayName: "Profile Name"
+                                },
+                                {
+                                    field: 'segment', displayName: "Segment Name"
+                                }
+                            ];
+                            cols_pre = cols_pre.concat(cols);
+                            cols = cols_pre;
+                        }
+                        scope.items = rows;
+                        scope.columns = cols;
+                        scope.gridOptions.minRowsToShow = rows.length;
+                    }
+                });
+            }
+        };
+    });

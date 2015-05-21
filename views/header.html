@@ -1,0 +1,65 @@
+<header class="clearfix">
+    <a href="#/" data-toggle-min-nav
+                 class="toggle-min"
+                 ><i class="fa fa-bars"></i></a>
+
+    <!-- Logo -->
+    <div class="logo">
+        <a href="#/">
+            <img src="images/superbrain-logo-ight.png" height="25px">
+        </a>
+    </div>
+    <!-- needs to be put after logo to make it working-->
+    <div class="menu-button" toggle-off-canvas>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+
+    <div class="top-nav">
+        <ul class="nav-right pull-right list-unstyled">
+            <li class="nav-profile">
+                <div>
+                    <a href="#/resources" >
+                        <img src="images/graduate_hat.png" height="35px" alt="Resources" title="Resources"/>
+                    </a>
+                </div>
+            </li>
+            <li class="dropdown text-normal nav-profile">
+                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{userInfo.picture}}" alt="" class="img-circle img30_30">
+                    <span class="hidden-xs">
+                        <span data-i18n="{{userInfo.name}}"></span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu with-arrow pull-right">
+                    <li>
+                        <a href="#/pages/profile">
+                            <i class="fa fa-user"></i>
+                            <span data-i18n="My Profile"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/tasks">
+                            <i class="fa fa-check"></i>
+                            <span data-i18n="My Tasks"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/pages/lock-screen">
+                            <i class="fa fa-lock"></i>
+                            <span data-i18n="Lock"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/pages/signin">
+                            <i class="fa fa-sign-out"></i>
+                            <span data-i18n="Log Out"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>        
+    </div>
+
+</header>

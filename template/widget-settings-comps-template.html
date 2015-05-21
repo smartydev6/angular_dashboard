@@ -1,0 +1,86 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+    <h3>Widget Options <small>{{widget.title}}</small></h3>
+</div>
+
+<div class="modal-body">
+    <form name="form" novalidate class="form-horizontal form-validation">
+        <div class="form-group">
+            <label for="widgetTitle" class="col-sm-3 control-label">Title</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="widgetTitle" required="" ng-model="result.title" disabled>
+            </div>
+        </div>
+        <div ng-repeat="compData in result.compDatas" ng-if="compData.index == currentindex">
+            <div class="form-group">
+                <label for="widgetSource" class="col-sm-3 control-label">Data Source</label>
+                <div class="col-sm-9">
+                    <select class="form-control" name="datasources" data-ng-model="compData.datasource"  data-ng-change="changeDataSource(compData)">
+                        <option data-ng-repeat="datasource in datasources" value="{{datasource.id}}"  data-ng-selected="datasource.id == compData.datasource">{{datasource.value}}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Data Source Settings -->
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <div class="form-group">
+                        <label for="GAAccount" class="col-sm-3 control-label">Account</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="accounts" data-ng-model="compData.ga.accountid" data-ng-change="ga.changeAccount(compData)">
+                                <option data-ng-repeat="account in result.ga.accounts" value="{{account.id}}" data-ng-selected="account.id == result.ga.accountid">{{account.name}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="GAProperty" class="col-sm-3 control-label">Property</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="properties" data-ng-model="compData.ga.propertyid" data-ng-change="ga.changeProperty(compData)">
+                                <option data-ng-repeat="property in result.ga.properties | filter:{accountId : compData.ga.accountid}" value="{{property.id}}" data-ng-selected="property.id == result.ga.propertyid">{{property.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="GAProfile" class="col-sm-3 control-label">Profile</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="profiles" data-ng-model="compData.ga.profileid" >
+                                <option data-ng-repeat="profile in result.ga.profiles | filter:{accountId: compData.ga.accountid, webPropertyId:compData.ga.propertyid}" value="{{profile.id}}" data-ng-selected="profile.id == result.ga.profileid">{{profile.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="GASegment" class="col-sm-3 control-label">Segments</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="segments" data-ng-model="compData.ga.segmentid">
+                                <option data-ng-repeat="segment in result.ga.segments" value="{{segment.id}}" data-ng-selected="segment.id == compData.ga.segmentid">{{segment.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="widgetTitle" class="col-sm-3 control-label">Navigation</label>
+            <div class="col-sm-9 dscomparenav">
+                <button type="button" class="btn btn-default" ng-click="gotoprev()">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                </button>
+                <span style="padding:0px 15px 0px 15px">{{currentindex}} &nbsp;&nbsp; of &nbsp;&nbsp; {{dscount}}</span>
+                <button type="button" class="btn btn-default" ng-click="gotonext()">
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default pull-right" value="Add New" ng-click="new()">
+                    Add New
+                </button>
+            </div>
+        </div>
+
+        <div ng-if="widget.settingsModalOptions.partialTemplateUrl"
+             ng-include="widget.settingsModalOptions.partialTemplateUrl"></div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+</div>
